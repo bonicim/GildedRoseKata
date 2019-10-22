@@ -25,8 +25,8 @@ class GildedRoseTest {
                 new Item(VEST, 10, 20), //
                 new Item(BRIE, 2, 0), //
                 new Item(ELIXIR, 5, 7), //
-                new Item(SULFURAS, 0, 50), //
-                new Item(SULFURAS, -1, 50),
+                new Item(SULFURAS, 0, 80), //
+                new Item(SULFURAS, -1, 80),
                 new Item(BACKSTAGE_PASSES, 15, 20),
                 new Item(BACKSTAGE_PASSES, 11, 5),
                 new Item(BACKSTAGE_PASSES, 10, 42),
@@ -91,9 +91,11 @@ class GildedRoseTest {
     }
 
     @Test
-    void itemQualityNotMoreThan50() {
+    void itemQualityNotMoreThan50ExceptSulfuras() {
         for (Item item: gildedRose.items) {
-            assertTrue(item.quality < 51, "The Quality of an item is never more than 50: " + item.toString());
+            if (!item.name.equals(SULFURAS)) {
+                assertTrue(item.quality < 51, "The Quality of an item is never more than 50: " + item.toString());
+            }
         }
     }
 
