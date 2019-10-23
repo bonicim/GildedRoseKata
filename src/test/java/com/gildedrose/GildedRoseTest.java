@@ -22,10 +22,10 @@ class GildedRoseTest {
     @BeforeEach
     void setUp() {
         items = new Item[] {
-                new Item(VEST, 10, 20), //
-                new Item(BRIE, 2, 0), //
-                new Item(ELIXIR, 5, 7), //
-                new Item(SULFURAS, 0, 80), //
+                new NormalItem(VEST, 10, 20),
+                new Item(BRIE, 2, 0),
+                new NormalItem(ELIXIR, 5, 7),
+                new Item(SULFURAS, 0, 80),
                 new Item(SULFURAS, -1, 80),
                 new Item(BACKSTAGE_PASSES, 15, 20),
                 new Item(BACKSTAGE_PASSES, 11, 5),
