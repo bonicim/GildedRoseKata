@@ -21,21 +21,26 @@ public class GildedRose {
                 item.updateQuality();
             } else {
                 // update quality for brie or backstage or sulfuras and quality is less than 50
-                if (items[i].quality < 50) {
-                    items[i].quality = items[i].quality + 1;
+                if (items[i].getClass() == BrieItem.class) {
+                    BrieItem item = (BrieItem) items[i];
+                    item.updateQuality();
+                } else {
+                    if (items[i].quality < 50) {
+                        items[i].quality = items[i].quality + 1;
 
 
-                    if (items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        // then if its backstage and sellin is 10 days or less and quality is less than 50, increase the quality by 1
-                        if (items[i].sellIn < 11) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
+                        if (items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+                            // then if its backstage and sellin is 10 days or less and quality is less than 50, increase the quality by 1
+                            if (items[i].sellIn < 11) {
+                                if (items[i].quality < 50) {
+                                    items[i].quality = items[i].quality + 1;
+                                }
                             }
-                        }
-                        // then if its backstage and sellin is 5 days or less and quality is less than 50, increase the quality by 1
-                        if (items[i].sellIn < 6) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
+                            // then if its backstage and sellin is 5 days or less and quality is less than 50, increase the quality by 1
+                            if (items[i].sellIn < 6) {
+                                if (items[i].quality < 50) {
+                                    items[i].quality = items[i].quality + 1;
+                                }
                             }
                         }
                     }

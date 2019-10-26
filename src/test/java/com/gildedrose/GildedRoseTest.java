@@ -23,7 +23,8 @@ class GildedRoseTest {
     void setUp() {
         items = new Item[] {
                 new NormalItem(VEST, 10, 20),
-                new Item(BRIE, 2, 0),
+                new BrieItem(BRIE, 2, 0),
+//                new Item(BRIE, 2, 0),
                 new NormalItem(ELIXIR, 5, 7),
                 new Item(SULFURAS, 0, 80),
                 new Item(SULFURAS, -1, 80),
