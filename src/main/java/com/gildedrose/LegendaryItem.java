@@ -1,7 +1,7 @@
 package com.gildedrose;
 
-public class BrieItem extends ItemV2 {
-    public BrieItem(String name, int sellIn, int quality) {
+public class LegendaryItem extends ItemV2 {
+    public LegendaryItem(String name, int sellIn, int quality) {
         super(name, sellIn, quality);
     }
 

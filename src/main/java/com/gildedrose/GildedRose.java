@@ -27,10 +27,9 @@ public class GildedRose {
                 } else if (items[i].getClass() == BackstagePassItem.class) {
                     BackstagePassItem item = (BackstagePassItem) items[i];
                     item.updateQuality();
-                } else {
-                    if (items[i].quality < 50) {
-                        items[i].quality = items[i].quality + 1;
-                    }
+                } else if (items[i].getClass() == LegendaryItem.class) {
+                    LegendaryItem item = (LegendaryItem) items[i];
+                    item.updateQuality();
                 }
             }
             // the above code blocks update quality based on original quality or sellin for backstage
