@@ -24,16 +24,15 @@ class GildedRoseTest {
         items = new Item[] {
                 new NormalItem(VEST, 10, 20),
                 new BrieItem(BRIE, 2, 0),
-//                new Item(BRIE, 2, 0),
                 new NormalItem(ELIXIR, 5, 7),
                 new Item(SULFURAS, 0, 80),
                 new Item(SULFURAS, -1, 80),
-                new Item(BACKSTAGE_PASSES, 15, 20),
-                new Item(BACKSTAGE_PASSES, 11, 5),
-                new Item(BACKSTAGE_PASSES, 10, 42),
-                new Item(BACKSTAGE_PASSES, 5, 23),
-                new Item(BACKSTAGE_PASSES, 6, 15),
-                new Item(BACKSTAGE_PASSES, 1, 49),
+                new BackstagePassItem(BACKSTAGE_PASSES, 15, 20),
+                new BackstagePassItem(BACKSTAGE_PASSES, 11, 5),
+                new BackstagePassItem(BACKSTAGE_PASSES, 10, 42),
+                new BackstagePassItem(BACKSTAGE_PASSES, 5, 23),
+                new BackstagePassItem(BACKSTAGE_PASSES, 6, 15),
+                new BackstagePassItem(BACKSTAGE_PASSES, 1, 49),
                 // this conjured item does not work properly yet
                 new Item(CONJURED, 3, 6) };
 
