@@ -1,7 +1,15 @@
 package com.gildedrose;
 
+import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.Test;
+
+import java.io.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class TexttstFixture {
-    public static void main(String[] args) {
+
+    @Test
+    public static void main(String[] args) throws IOException {
         System.out.println("OMGHAI!");
 
         Item[] items = new Item[] {
@@ -23,6 +31,11 @@ public class TexttstFixture {
             days = Integer.parseInt(args[0]) + 1;
         }
 
+        File actual_two_days_output = new File("actual_two_days_output.txt");
+        FileOutputStream fos = new FileOutputStream(actual_two_days_output);
+        PrintStream ps = new PrintStream(fos);
+        System.setOut(ps);
+
         for (int i = 0; i < days; i++) {
             System.out.println("-------- day " + i + " --------");
             System.out.println("name, sellIn, quality");
@@ -32,5 +45,9 @@ public class TexttstFixture {
             System.out.println();
             app.updateQuality();
         }
+
+        File expected_two_days_output = new File("expected_two_days_output.txt");
+        Boolean isOutputTheSame = FileUtils.contentEquals(actual_two_days_output, expected_two_days_output);
+        assertTrue(isOutputTheSame);
     }
 }
