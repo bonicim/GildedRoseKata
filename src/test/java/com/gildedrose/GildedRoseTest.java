@@ -12,27 +12,27 @@ class GildedRoseTest {
     private Item[] items;
     private GildedRose gildedRose;
 
-    private final String VEST = "+5 Dexterity Vest";
-    private final String BRIE = "Aged Brie";
-    private final String ELIXIR = "Elixir of the Mongoose";
-    private final String SULFURAS = "Sulfuras, Hand of Ragnaros";
-    private final String BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert";
-    private final String CONJURED = "Conjured Mana Cake";
+    private static final String VEST = "+5 Dexterity Vest";
+    private static final String BRIE = "Aged Brie";
+    private static final String ELIXIR = "Elixir of the Mongoose";
+    private static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
+    private static final String BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert";
+    private static final String CONJURED = "Conjured Mana Cake";
 
     @BeforeEach
     void setUp() {
         items = new Item[] {
-                new NormalItem(VEST, 10, 20),
-                new BrieItem(BRIE, 2, 0),
-                new NormalItem(ELIXIR, 5, 7),
-                new LegendaryItem(SULFURAS, 0, 80),
-                new LegendaryItem(SULFURAS, -1, 80),
-                new BackstagePassItem(BACKSTAGE_PASSES, 15, 20),
-                new BackstagePassItem(BACKSTAGE_PASSES, 11, 5),
-                new BackstagePassItem(BACKSTAGE_PASSES, 10, 42),
-                new BackstagePassItem(BACKSTAGE_PASSES, 5, 23),
-                new BackstagePassItem(BACKSTAGE_PASSES, 6, 15),
-                new BackstagePassItem(BACKSTAGE_PASSES, 1, 49),
+                new Item(VEST, 10, 20),
+                new Item(BRIE, 2, 0),
+                new Item(ELIXIR, 5, 7),
+                new Item(SULFURAS, 0, 80),
+                new Item(SULFURAS, -1, 80),
+                new Item(BACKSTAGE_PASSES, 15, 20),
+                new Item(BACKSTAGE_PASSES, 11, 5),
+                new Item(BACKSTAGE_PASSES, 10, 42),
+                new Item(BACKSTAGE_PASSES, 5, 23),
+                new Item(BACKSTAGE_PASSES, 6, 15),
+                new Item(BACKSTAGE_PASSES, 1, 49),
                 // this conjured item does not work properly yet
                 new Item(CONJURED, 3, 6) };
 
@@ -63,10 +63,10 @@ class GildedRoseTest {
         assertEquals(vest.sellIn, -1);
         assertEquals(8, vest.quality);
 
-       gildedRose.updateQuality();
+        gildedRose.updateQuality();
 
-       assertEquals(vest.sellIn, -2);
-       assertEquals(6, vest.quality);
+        assertEquals(vest.sellIn, -2);
+        assertEquals(6, vest.quality);
     }
 
     @Test
