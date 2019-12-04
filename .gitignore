@@ -6,3 +6,4 @@ target/
 .project
 bin/
 .settings/
+actual_two_days_output.txt
