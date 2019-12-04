@@ -33,7 +33,7 @@ public class GildedRose {
             } else if (item.name.equals(BACKSTAGE_PASSES)) {
                 itemStrategy.put(item, new BackstagePassItemStrategy(item));
             } else if (item.name.equals(CONJURED)) {
-                itemStrategy.put(item, new NormalItemStrategy(item));
+                itemStrategy.put(item, new ConjuredItemStrategy(item));
             }
         }
     }

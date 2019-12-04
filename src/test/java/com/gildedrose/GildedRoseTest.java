@@ -1,7 +1,6 @@
 package com.gildedrose;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,7 +32,6 @@ class GildedRoseTest {
                 new Item(BACKSTAGE_PASSES, 5, 23),
                 new Item(BACKSTAGE_PASSES, 6, 15),
                 new Item(BACKSTAGE_PASSES, 1, 49),
-                // this conjured item does not work properly yet
                 new Item(CONJURED, 3, 6) };
 
         gildedRose = new GildedRose(items);
@@ -42,8 +40,12 @@ class GildedRoseTest {
 
     @Test
     void vestQualitySellInAndQualityShouldDecreaseAfterOneDay() {
-        gildedRose.updateQuality();
         Item vest = getItem(VEST);
+        Integer originalQuality = vest.quality;
+
+        gildedRose.updateQuality();
+
+        assertTrue(originalQuality > vest.quality);
         assertEquals(9, vest.sellIn);
         assertEquals(19, vest.quality);
     }
@@ -214,8 +216,7 @@ class GildedRoseTest {
     }
 
     @Test
-    @Disabled
-    void conjuredShouldDecreaseBy2() {
+    void conjuredShouldDecreaseQualityBy2() {
         Item item = getItem(CONJURED);
         Integer originalQuality = item.quality;
 
@@ -223,6 +224,17 @@ class GildedRoseTest {
 
         assertTrue(originalQuality > item.quality);
         assertEquals(4, item.quality);
+    }
+
+    @Test
+    void conjuredShouldDecreaseSellinBy1() {
+        Item item = getItem(CONJURED);
+        Integer originalSellin = item.sellIn;
+
+        gildedRose.updateQuality();
+
+        assertTrue(originalSellin > item.sellIn);
+        assertEquals(2, item.sellIn);
     }
 
     Item getItem(String name) {
