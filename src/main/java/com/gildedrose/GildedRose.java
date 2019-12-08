@@ -2,6 +2,8 @@ package com.gildedrose;
 
 import com.google.common.collect.ImmutableMap;
 
+import java.util.Map;
+
 public class GildedRose {
 
     Item[] items;
@@ -35,8 +37,10 @@ public class GildedRose {
 
 
     public void updateQuality() {
-        for (int i = 0; i < items.length; i++) {
-            ItemStrategy strategy = itemStrategy.get(items[i]);
+        ImmutableMap.Builder<Item, ItemStrategy> builder = new ImmutableMap.Builder<>();
+        for (Map.Entry<Item, ItemStrategy> entry: itemStrategy.entrySet()) {
+            Item item = entry.getKey();
+            ItemStrategy strategy = entry.getValue();
             strategy.updateQuality();
         }
     }
