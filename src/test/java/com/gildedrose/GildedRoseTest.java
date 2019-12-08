@@ -19,7 +19,7 @@ class GildedRoseTest {
     private static final String CONJURED = "Conjured Mana Cake";
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
         items = new Item[] {
                 new Item(VEST, 10, 20),
                 new Item(BRIE, 2, 0),

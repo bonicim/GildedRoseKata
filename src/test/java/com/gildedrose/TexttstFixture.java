@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class TexttstFixture {
 
     @Test
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         System.out.println("OMGHAI!");
 
         Item[] items = new Item[] {
