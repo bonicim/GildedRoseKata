@@ -9,15 +9,16 @@ public class NormalItemStrategy implements ItemStrategy {
     }
 
     @Override
-    public void updateQuality() {
-        if (item.quality > 0) {
-            item.quality-=QUALITY_DEGRADE_RATE;
-        }
+    public Item updateQuality() {
+        Integer updatedQuality = item.quality;
+        Integer updatedSellin = item.sellIn;
 
-        item.sellIn--;
+        if (updatedQuality > 0) updatedQuality = updatedQuality - QUALITY_DEGRADE_RATE;
 
-        if (item.sellIn < 0 && item.quality > 0) {
-            item.quality--;
-        }
+        updatedSellin--;
+
+        if (updatedSellin < 0 && updatedQuality > 0) updatedQuality--;
+
+        return new Item(item.name, updatedSellin, updatedQuality);
     }
 }

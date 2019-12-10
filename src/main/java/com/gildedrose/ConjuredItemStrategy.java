@@ -7,15 +7,16 @@ public class ConjuredItemStrategy extends NormalItemStrategy{
     }
 
     @Override
-    public void updateQuality() {
-        if (item.quality > 0) {
-            item.quality-=QUALITY_DEGRADE_RATE * 2;
-        }
+    public Item updateQuality() {
+        Integer updatedQuality = item.quality;
+        Integer updatedSellin = item.sellIn;
 
-        item.sellIn--;
+        if (updatedQuality > 0) updatedQuality = updatedQuality - QUALITY_DEGRADE_RATE * 2;
 
-        if (item.sellIn < 0 && item.quality > 0) {
-            item.quality--;
-        }
+        updatedSellin--;
+
+        if (updatedSellin < 0 && updatedQuality > 0) updatedQuality--;
+
+        return new Item(item.name, updatedSellin, updatedQuality);
     }
 }

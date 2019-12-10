@@ -8,27 +8,20 @@ public class BackstagePassItemStrategy implements ItemStrategy {
     }
 
     @Override
-    public void updateQuality() {
-        if (item.quality < 50) {
-            item.quality++;
-        }
+    public Item updateQuality() {
+        Integer updatedQuality = item.quality;
+        Integer updatedSellin = item.sellIn;
 
-        if (item.sellIn < 11) {
-            if (item.quality < 50) {
-                item.quality++;
-            }
-        }
+        if (updatedQuality < 50) updatedQuality++;
 
-        if (item.sellIn < 6) {
-            if (item.quality < 50) {
-                item.quality++;
-            }
-        }
+        if (updatedSellin < 11 && updatedQuality < 50) updatedQuality++;
 
-        item.sellIn--;
+        if (updatedSellin < 6 && updatedQuality < 50) updatedQuality++;
 
-        if (item.sellIn < 0) {
-            item.quality = 0;
-        }
+        updatedSellin--;
+
+        if (item.sellIn < 0) updatedQuality = 0;
+
+        return new Item(item.name, updatedSellin, updatedQuality);
     }
 }

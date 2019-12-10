@@ -3,8 +3,7 @@ package com.gildedrose;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class GildedRoseTest {
 
@@ -39,219 +38,184 @@ class GildedRoseTest {
 
 
     @Test
-    void vestQualitySellInAndQualityShouldDecreaseAfterOneDay() {
-        Item vest = getItem(VEST);
-        Integer originalQuality = vest.quality;
+    void vestSellInAndQualityShouldDecreaseAfterOneDay() throws Exception {
+        Item expectedItem = new Item(VEST, 9, 19);
 
-        gildedRose.updateQuality();
+        GildedRose updatedGildedRose = gildedRose.updateQuality();
 
-        assertTrue(originalQuality > vest.quality);
-        assertEquals(9, vest.sellIn);
-        assertEquals(19, vest.quality);
+        assertTrue(updatedGildedRose.hasItem(expectedItem));
     }
 
     @Test
-    void vestQualityShouldDecreaseBy2XAfterSellinDate() {
-        for (int i = 0; i < 10; i++) {
-            gildedRose.updateQuality();
+    void vestQualityShouldDecreaseBy2WhenSellinDateIsZero() throws Exception {
+        Item expectedItem = new Item(VEST, 0, 10);
+
+        GildedRose updatedGildedRose = gildedRose.updateQuality();
+        for (int i = 0; i < 9; i++) {
+            updatedGildedRose = updatedGildedRose.updateQuality();
         }
-        Item vest = getItem("+5 Dexterity Vest");
 
-        assertEquals(0, vest.sellIn);
-        assertEquals(10, vest.quality);
+        assertTrue(updatedGildedRose.hasItem(expectedItem));
 
-        gildedRose.updateQuality();
 
-        assertEquals(vest.sellIn, -1);
-        assertEquals(8, vest.quality);
+        expectedItem.sellIn = -1;
+        expectedItem.quality = 8;
 
-        gildedRose.updateQuality();
+        updatedGildedRose = updatedGildedRose.updateQuality();
 
-        assertEquals(vest.sellIn, -2);
-        assertEquals(6, vest.quality);
+        assertTrue(updatedGildedRose.hasItem(expectedItem));
+
+        expectedItem.sellIn = -2;
+        expectedItem.quality = 6;
+
+        updatedGildedRose = updatedGildedRose.updateQuality();
+
+        assertTrue(updatedGildedRose.hasItem(expectedItem));
     }
 
     @Test
-    void vestQualityNeverBecomesNegative() {
-        for (int i = 0; i < 20; i++) {
-            gildedRose.updateQuality();
+    void vestQualityShouldNeverBeNegative() throws Exception {
+        Item expectedItem = new Item(VEST, -10, 0);
+
+        GildedRose updatedGildedRose = gildedRose.updateQuality();
+        for (int i = 0; i < 19; i++) {
+            updatedGildedRose = updatedGildedRose.updateQuality();
         }
-        Item vest = getItem("+5 Dexterity Vest");
 
-        assertEquals(vest.sellIn, -10);
-        assertEquals(0, vest.quality);
-
-        gildedRose.updateQuality();
-        assertTrue(vest.quality >= 0 );
+        assertTrue(updatedGildedRose.hasItem(expectedItem));
     }
 
     @Test
-    void itemQualityNotNegative() {
-        for (Item item: gildedRose.items) {
-            assertTrue(item.quality > -1, "The Quality of an item is never negative: " + item.toString());
-        }
+    void itemsShouldNotHaveNegativeQuality() {
+        assertFalse(gildedRose.hasNegativeQualityItems());
     }
 
     @Test
-    void itemQualityNotMoreThan50ExceptSulfuras() {
-        for (Item item: gildedRose.items) {
-            if (!item.name.equals(SULFURAS)) {
-                assertTrue(item.quality < 51, "The Quality of an item is never more than 50: " + item.toString());
-            }
-        }
+    void itemsShouldNotHaveQualityGreaterThan50() {
+        assertFalse(gildedRose.hasItemQualityOver50());
     }
 
     @Test
-    void agedBrieShouldIncreaseQualityAsItGetsOlder() {
-        Item agedBrieInitial = getItem("Aged Brie");
-        Integer originalQuality = agedBrieInitial.quality;
-
-        gildedRose.updateQuality();
-
-        assertTrue(agedBrieInitial.quality > originalQuality);
+    void sulfurasQualityShouldRemainAt80AfterAnyUpdate() {
+        assertTrue(gildedRose.areAllSulfurasQualityAt80());
     }
 
     @Test
-    void sulfurasSellinIsZeroOrLess() {
-        Item sulfuras = getItem(SULFURAS);
-        assertTrue(sulfuras.sellIn <= 0);
+    void brieShouldIncreaseQualityAsItGetsOlder() throws Exception {
+        Item expectedBrieItem = new Item(BRIE, 1,1);
+
+        GildedRose updatedGildedRose = gildedRose.updateQuality();
+
+        assertTrue(updatedGildedRose.hasItem(expectedBrieItem));
     }
 
     @Test
-    void sulfurasShouldNotDecreaseQualityAfterEndOfDay() {
-        Item sulfuras = getItem("Sulfuras, Hand of Ragnaros");
-        Integer originalQuality = sulfuras.quality;
-
-        gildedRose.updateQuality();
-
-        assertTrue(originalQuality == sulfuras.quality);
+    void sulfurasSellinNotOnSale() {
+        assertTrue(gildedRose.areAllSulfurasNotOnSale());
     }
 
     @Test
-    void backstagePassesShouldIncreaseQualityBy1ForSellInDatesAtGreaterThan10() {
-        Item item = getBackStagePass(BACKSTAGE_PASSES, 15);
-        Integer originalQuality = item.quality;
-        gildedRose.updateQuality();
+    void sulfurasQualityShouldNotDecreaseAfterUpdate() throws Exception {
+        Item sulfurasItem1 = new Item(SULFURAS, 0, 80);
+        Item sulfurasItem2 = new Item(SULFURAS, -1, 80);
 
-        assertTrue(originalQuality < item.quality);
-        assertEquals(21, item.quality);
-        gildedRose.updateQuality();
-        assertEquals(22, item.quality);
+        GildedRose updatedGildedRose = gildedRose.updateQuality();
+
+        assertTrue(updatedGildedRose.hasItem(sulfurasItem1));
+        assertTrue(updatedGildedRose.hasItem(sulfurasItem2));
     }
 
     @Test
-    void backstagePassesShouldBeZeroQualityAfterConcert() {
-        Item item = getBackStagePass(BACKSTAGE_PASSES, 15);
-        Integer originalQuality = item.quality;
+    void backstagePassQualityShouldIncreaseBy1ForSellInDatesGreaterThan10() throws Exception {
+        Item expectedBackstagePass = new Item(BACKSTAGE_PASSES, 14, 21);
+
+        GildedRose updatedGildedRose = gildedRose.updateQuality();
+
+        assertTrue(updatedGildedRose.hasItem(expectedBackstagePass));
+    }
+
+    @Test
+    void backstagePassQualityShouldBeZeroWhenSellinIsNegativeOneAKADayAfterConcert() throws Exception {
+        Item expectedBackstagePass = new Item(BACKSTAGE_PASSES, -2, 0);
+
+        GildedRose updatedGildedRose = gildedRose.updateQuality();
         for (int i = 0; i < 16; i++) {
-            gildedRose.updateQuality();
+            updatedGildedRose = updatedGildedRose.updateQuality();
         }
 
-        assertTrue(item.sellIn == -1);
-        assertTrue(originalQuality > item.quality);
-        assertEquals(0, item.quality);
+        assertTrue(updatedGildedRose.hasItem(expectedBackstagePass));
     }
 
     @Test
-    void backstagePassesShouldIncreaseQualityBy1ForSellInDatesAt1() {
-        Item item = getBackStagePass(BACKSTAGE_PASSES, 1);
-        Integer originalQuality = item.quality;
-        gildedRose.updateQuality();
+    void backstagePassQualityShouldIncreaseByOneOnDayOfConcert() throws Exception {
+        Item exectedBackstagePass = new Item(BACKSTAGE_PASSES, 0, 50);
 
-        assertTrue(originalQuality < item.quality);
-        assertEquals(50, item.quality);
+        GildedRose updatedGildedRose = gildedRose.updateQuality();
+
+        assertTrue(updatedGildedRose.hasItem(exectedBackstagePass));
     }
 
     @Test
-    void backstagePassesShouldIncreaseQualityBy2ForSellInDateAt10() {
-        Item item = getBackStagePass(BACKSTAGE_PASSES, 10);
-        Integer originalQuality = item.quality;
-        gildedRose.updateQuality();
+    void backstagePassQualityShouldIncreaseBy2ForSellInDateLessThanOrEqualTo10() throws Exception {
+        Item exectedBackstagePass = new Item(BACKSTAGE_PASSES, 9, 44);
 
-        assertTrue(originalQuality < item.quality);
-        assertEquals(44, item.quality);
+        GildedRose updatedGildedRose = gildedRose.updateQuality();
+
+        assertTrue(updatedGildedRose.hasItem(exectedBackstagePass));
     }
 
     @Test
-    void backstagePassesShouldIncreaseQualityBy3ForSellInDateIs5OrLess() {
-        Item item = getBackStagePass(BACKSTAGE_PASSES, 5);
-        Integer originalQuality = item.quality;
+    void backstagePassQualityShouldIncreaseBy3ForSellInDateLessThanOrEqualTo5() throws Exception {
+        Item exectedBackstagePass = new Item(BACKSTAGE_PASSES, 9, 44);
 
-        gildedRose.updateQuality();
+        GildedRose updatedGildedRose = gildedRose.updateQuality();
 
-        assertTrue(originalQuality < item.quality);
-        assertEquals(26, item.quality);
+        assertTrue(updatedGildedRose.hasItem(exectedBackstagePass));
     }
 
     @Test
-    void backstagePassesShouldIncreaseQualityBy1ThenBy2() {
-        Item item = getBackStagePass(BACKSTAGE_PASSES, 11);
-        Integer originalQuality = item.quality;
+    void backstagePassQualityShouldIncreaseBy1ThenBy2() throws Exception {
+        // Test after one update
+        Item exectedBackstagePass = new Item(BACKSTAGE_PASSES, 10, 6);
 
-         gildedRose.updateQuality();
+        GildedRose updatedGildedRose = gildedRose.updateQuality();
 
-        assertTrue(originalQuality < item.quality);
-        assertEquals(6, item.quality);
+        assertTrue(updatedGildedRose.hasItem(exectedBackstagePass));
 
-        gildedRose.updateQuality();
+        // Test after two updates
+        exectedBackstagePass.sellIn = 9;
+        exectedBackstagePass.quality = 8;
 
-        assertTrue(originalQuality < item.quality);
-        assertEquals(8, item.quality);
+        updatedGildedRose = updatedGildedRose.updateQuality();
+
+        assertTrue(updatedGildedRose.hasItem(exectedBackstagePass));
     }
 
     @Test
-    void backstagePassesShouldIncreaseQualityBy2ThenBy3() {
-        Item item = getBackStagePass(BACKSTAGE_PASSES, 6);
-        Integer originalQuality = item.quality;
+    void backstagePassQualityShouldIncreaseBy2ThenBy3() throws Exception {
+        // Test after one update
+        Item exectedBackstagePass = new Item(BACKSTAGE_PASSES, 5, 17);
 
-        gildedRose.updateQuality();
+        GildedRose updatedGildedRose = gildedRose.updateQuality();
 
-        assertTrue(originalQuality < item.quality);
-        assertEquals(17, item.quality);
+        assertTrue(updatedGildedRose.hasItem(exectedBackstagePass));
 
-        gildedRose.updateQuality();
+        // Test after two updates
+        exectedBackstagePass.sellIn = 4;
+        exectedBackstagePass.quality = 20;
 
-        assertTrue(originalQuality < item.quality);
-        assertEquals(20, item.quality);
+        updatedGildedRose = updatedGildedRose.updateQuality();
+
+        assertTrue(updatedGildedRose.hasItem(exectedBackstagePass));
     }
 
     @Test
-    void conjuredShouldDecreaseQualityBy2() {
-        Item item = getItem(CONJURED);
-        Integer originalQuality = item.quality;
+    void conjuredQualityShouldDecreaseBy2() throws Exception {
+        Item exectedBackstagePass = new Item(CONJURED, 2, 4);
 
-        gildedRose.updateQuality();
+        GildedRose updatedGildedRose = gildedRose.updateQuality();
 
-        assertTrue(originalQuality > item.quality);
-        assertEquals(4, item.quality);
+        assertTrue(updatedGildedRose.hasItem(exectedBackstagePass));
     }
 
-    @Test
-    void conjuredShouldDecreaseSellinBy1() {
-        Item item = getItem(CONJURED);
-        Integer originalSellin = item.sellIn;
-
-        gildedRose.updateQuality();
-
-        assertTrue(originalSellin > item.sellIn);
-        assertEquals(2, item.sellIn);
-    }
-
-    Item getItem(String name) {
-        for (Item item: gildedRose.items) {
-            if (item.name.equals(name)) {
-                return item;
-            }
-        }
-        return null;
-    }
-
-    Item getBackStagePass(String name, Integer sellin) {
-        for (Item item: gildedRose.items) {
-            if (item.name.equals(BACKSTAGE_PASSES) && item.sellIn == sellin) {
-                return item;
-            }
-        }
-        return null;
-    }
 }

@@ -8,17 +8,16 @@ public class BrieItemStrategy implements ItemStrategy {
     }
 
     @Override
-    public void updateQuality() {
-        if (item.quality < 50) {
-            item.quality++;
-        }
+    public Item updateQuality() {
+        Integer updatedQuality = item.quality;
+        Integer updatedSellin = item.sellIn;
 
-        item.sellIn--;
+        if (updatedQuality < 50) updatedQuality++;
 
-        if (item.sellIn < 0) {
-            if (item.quality < 50) {
-                item.quality++;
-            }
-        }
+        updatedSellin--;
+
+        if (updatedSellin < 0 && updatedQuality < 50) updatedQuality++;
+
+        return new Item(item.name, updatedSellin, updatedQuality);
     }
 }
