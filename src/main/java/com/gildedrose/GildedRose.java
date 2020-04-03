@@ -23,15 +23,18 @@ public class GildedRose {
     }
 
     public GildedRose updateQuality() throws Exception {
+        Item[] updatedItems = updateItems();
+        return new GildedRose(
+            updatedItems,
+            new ItemStrategies().build(updatedItems));
+    }
+
+    private Item[] updateItems() {
         List<Item> tempItems = new ArrayList<>();
         for (Item item: itemsV2) {
             tempItems.add(strategies.update(item));
         }
-        Item[] updatedItems = tempItems.toArray(new Item[tempItems.size()]);
-
-        return new GildedRose(
-            updatedItems,
-            new ItemStrategies().build(updatedItems));
+        return tempItems.toArray(new Item[tempItems.size()]);
     }
 
     public Boolean hasItem(Item item) {
