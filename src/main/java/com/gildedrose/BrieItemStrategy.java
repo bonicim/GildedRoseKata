@@ -1,6 +1,6 @@
 package com.gildedrose;
 
-public class BrieItemStrategy implements ItemStrategy {
+public class BrieItemStrategy implements ItemStrategyInterface {
     private Item item;
 
     public BrieItemStrategy(Item item) {

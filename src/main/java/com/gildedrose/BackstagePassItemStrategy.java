@@ -1,6 +1,6 @@
 package com.gildedrose;
 
-public class BackstagePassItemStrategy implements ItemStrategy {
+public class BackstagePassItemStrategy implements ItemStrategyInterface {
     private Item item;
 
     public BackstagePassItemStrategy(Item item) {

@@ -1,6 +1,6 @@
 package com.gildedrose;
 
-public class NormalItemStrategy implements ItemStrategy {
+public class NormalItemStrategy implements ItemStrategyInterface {
     protected Item item;
     protected static final Integer QUALITY_DEGRADE_RATE = 1;
 

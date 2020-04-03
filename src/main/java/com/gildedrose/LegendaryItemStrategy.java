@@ -1,6 +1,6 @@
 package com.gildedrose;
 
-public class LegendaryItemStrategy implements ItemStrategy {
+public class LegendaryItemStrategy implements ItemStrategyInterface {
     private Item item;
 
     public LegendaryItemStrategy(Item item) {

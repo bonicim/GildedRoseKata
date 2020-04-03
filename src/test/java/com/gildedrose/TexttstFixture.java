@@ -10,8 +10,6 @@ public class TexttstFixture {
 
     @Test
     public static void main(String[] args) throws Exception {
-        System.out.println("OMGHAI!");
-
         Item[] items = new Item[] {
                 new Item("+5 Dexterity Vest", 10, 20), //
                 new Item("Aged Brie", 2, 0), //
@@ -22,8 +20,9 @@ public class TexttstFixture {
                 new Item("Backstage passes to a TAFKAL80ETC concert", 10, 49),
                 new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49),
                 new Item("Conjured Mana Cake", 3, 6) };
+        ItemStrategies strategies = new ItemStrategies().build(items);
 
-        GildedRose app = new GildedRose(items);
+        GildedRose app = new GildedRose(items, strategies);
 
         int days = 2;
         if (args.length > 0) {

@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class GildedRoseTest {
 
     private Item[] items;
+    private ItemStrategies strategies;
     private GildedRose gildedRose;
 
     private static final String VEST = "+5 Dexterity Vest";
@@ -32,8 +33,9 @@ class GildedRoseTest {
                 new Item(BACKSTAGE_PASSES, 6, 15),
                 new Item(BACKSTAGE_PASSES, 1, 49),
                 new Item(CONJURED, 3, 6) };
+        strategies = new ItemStrategies().build(items);
 
-        gildedRose = new GildedRose(items);
+        gildedRose = new GildedRose(items, strategies);
     }
 
 
