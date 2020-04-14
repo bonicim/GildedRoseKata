@@ -1,11 +1,12 @@
 package com.gildedrose;
 
-public class BrieItemStrategy implements ItemStrategyInterface {
-    private Item item;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 
-    public BrieItemStrategy(Item item) {
-        this.item = item;
-    }
+@EqualsAndHashCode
+@AllArgsConstructor
+public class BrieItemUpdate implements ItemUpdateInterface {
+    private final Item item;
 
     @Override
     public Item updateQuality() {

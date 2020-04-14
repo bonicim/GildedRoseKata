@@ -6,9 +6,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GildedRoseTest {
-
-    private Item[] items;
-    private ItemStrategies strategies;
     private GildedRose gildedRose;
 
     private static final String VEST = "+5 Dexterity Vest";
@@ -20,22 +17,19 @@ class GildedRoseTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        items = new Item[] {
-                new Item(VEST, 10, 20),
-                new Item(BRIE, 2, 0),
-                new Item(ELIXIR, 5, 7),
-                new Item(SULFURAS, 0, 80),
-                new Item(SULFURAS, -1, 80),
-                new Item(BACKSTAGE_PASSES, 15, 20),
-                new Item(BACKSTAGE_PASSES, 11, 5),
-                new Item(BACKSTAGE_PASSES, 10, 42),
-                new Item(BACKSTAGE_PASSES, 5, 23),
-                new Item(BACKSTAGE_PASSES, 6, 15),
-                new Item(BACKSTAGE_PASSES, 1, 49),
-                new Item(CONJURED, 3, 6) };
-        strategies = new ItemStrategies().build(items);
-
-        gildedRose = new GildedRose(items, strategies);
+        gildedRose = new GildedRose(new Item[] {
+                                        new Item(VEST, 10, 20),
+                                        new Item(BRIE, 2, 0),
+                                        new Item(ELIXIR, 5, 7),
+                                        new Item(SULFURAS, 0, 80),
+                                        new Item(SULFURAS, -1, 80),
+                                        new Item(BACKSTAGE_PASSES, 15, 20),
+                                        new Item(BACKSTAGE_PASSES, 11, 5),
+                                        new Item(BACKSTAGE_PASSES, 10, 42),
+                                        new Item(BACKSTAGE_PASSES, 5, 23),
+                                        new Item(BACKSTAGE_PASSES, 6, 15),
+                                        new Item(BACKSTAGE_PASSES, 1, 49),
+                                        new Item(CONJURED, 3, 6) });
     }
 
 

@@ -1,11 +1,12 @@
 package com.gildedrose;
 
-public class LegendaryItemStrategy implements ItemStrategyInterface {
-    private Item item;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 
-    public LegendaryItemStrategy(Item item) {
-        this.item = item;
-    }
+@EqualsAndHashCode
+@AllArgsConstructor
+public class LegendaryItemUpdate implements ItemUpdateInterface {
+    private final Item item;
 
     @Override
     public Item updateQuality() {

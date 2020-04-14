@@ -1,44 +1,27 @@
 package com.gildedrose;
 
-import java.util.ArrayList;
-import java.util.List;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode
 public class GildedRose {
     Item[] items;
-    private final Item[] itemsV2;
-    private final ItemStrategies strategies;
+    private final Items itemsV1;
 
     public GildedRose(Item[] items) throws Exception {
-        this(items, items, new ItemStrategies());
+        this(items, new Items(items));
     }
 
-    public GildedRose(Item[] items, ItemStrategies strategies) throws Exception {
-        this(items, items, strategies);
-    }
-
-    public GildedRose(Item[] items, Item[] itemsV2, ItemStrategies strategies) {
+    GildedRose(Item[] items, Items itemsV1) throws Exception {
         this.items = items;
-        this.itemsV2 = itemsV2;
-        this.strategies = strategies;
+        this.itemsV1 = itemsV1;
     }
 
     public GildedRose updateQuality() throws Exception {
-        Item[] updatedItems = updateItems();
-        return new GildedRose(
-            updatedItems,
-            new ItemStrategies().build(updatedItems));
-    }
-
-    private Item[] updateItems() {
-        List<Item> tempItems = new ArrayList<>();
-        for (Item item: itemsV2) {
-            tempItems.add(strategies.update(item));
-        }
-        return tempItems.toArray(new Item[tempItems.size()]);
+        return new GildedRose(itemsV1.updateAllItems());
     }
 
     public Boolean hasItem(Item item) {
-        for (Item currItem: itemsV2) {
+        for (Item currItem: items) {
             if (currItem.name.equals(item.name) && currItem.quality == item.quality && currItem.sellIn == item.sellIn) {
                 return true;
             }
@@ -47,7 +30,7 @@ public class GildedRose {
     }
 
     public Boolean hasNegativeQualityItems() {
-        for (Item item: itemsV2) {
+        for (Item item: items) {
             if (item.quality < 0) {
                 return true;
             }
@@ -56,7 +39,7 @@ public class GildedRose {
     }
 
     public Boolean hasItemQualityOver50() {
-        for (Item item: itemsV2) {
+        for (Item item: items) {
             if (!item.name.equals("Sulfuras, Hand of Ragnaros") && item.quality > 50) {
                 return true;
             }
@@ -65,7 +48,7 @@ public class GildedRose {
     }
 
     public Boolean areAllSulfurasQualityAt80() {
-        for (Item item: itemsV2) {
+        for (Item item: items) {
             if (item.name.equals("Sulfuras, Hand of Ragnaros") && item.quality != 80) {
                 return false;
             }
@@ -74,7 +57,7 @@ public class GildedRose {
     }
 
     public Boolean areAllSulfurasNotOnSale() {
-        for (Item item: itemsV2) {
+        for (Item item: items) {
             if (item.name.equals("Sulfuras, Hand of Ragnaros") && item.sellIn > 0) {
                 return false;
             }

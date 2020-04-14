@@ -1,11 +1,11 @@
 package com.gildedrose;
 
-public class NormalItemStrategy implements ItemStrategyInterface {
-    protected Item item;
-    protected static final Integer QUALITY_DEGRADE_RATE = 1;
+import lombok.EqualsAndHashCode;
 
-    public NormalItemStrategy(Item item) {
-        this.item = item;
+@EqualsAndHashCode
+public class ConjuredItemUpdate extends NormalItemUpdate {
+    public ConjuredItemUpdate(Item item) {
+        super(item);
     }
 
     @Override
@@ -13,7 +13,7 @@ public class NormalItemStrategy implements ItemStrategyInterface {
         Integer updatedQuality = item.quality;
         Integer updatedSellin = item.sellIn;
 
-        if (updatedQuality > 0) updatedQuality = updatedQuality - QUALITY_DEGRADE_RATE;
+        if (updatedQuality > 0) updatedQuality = updatedQuality - QUALITY_DEGRADE_RATE * 2;
 
         updatedSellin--;
 

@@ -1,11 +1,12 @@
 package com.gildedrose;
 
-public class BackstagePassItemStrategy implements ItemStrategyInterface {
-    private Item item;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 
-    public BackstagePassItemStrategy(Item item) {
-        this.item = item;
-    }
+@EqualsAndHashCode
+@AllArgsConstructor
+public class BackstagePassItemUpdate implements ItemUpdateInterface {
+    private final Item item;
 
     @Override
     public Item updateQuality() {
